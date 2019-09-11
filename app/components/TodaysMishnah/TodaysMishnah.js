@@ -31,7 +31,7 @@ export default class TodaysMishnah extends React.Component{
     };
     // i now equals the index of the Masechta we're currently learning
     let perek = 1;
-    while(mishnayosCounter + parseInt(mishnahData[perek][i]) < upto){
+    while(mishnayosCounter + parseInt(mishnahData[perek][i]) <= upto){
       mishnayosCounter = mishnayosCounter + parseInt(mishnahData[perek][i]);
       perek += 1;
     }
