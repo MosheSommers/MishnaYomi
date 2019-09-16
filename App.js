@@ -11,7 +11,6 @@ import {
   ImageBackground,
   StyleSheet,
   View,
-  StatusBar,
 } from 'react-native';
 
 import {
@@ -20,22 +19,50 @@ import {
 
 import Header  from './app/components/Header/Header';
 import TodaysMishnah from './app/components/TodaysMishnah/TodaysMishnah';
+import Settings from './app/components/Settings/Settings';
 
-const App = () => {
-  return (
-    <ImageBackground
-     accessibilityRole={'image'}
-     source={require('./mishnahbackground.jpg')}
-     style={styles.background}
-     imageStyle={styles.logo}>   
-          <Header />
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <TodaysMishnah />
-            </View>    
-          </View>
-  </ImageBackground>
-  );
+export default class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = { 
+      showSettings:false,
+      startDate:"2019-08-17" //The default date for my MishnahYomi group
+    };
+   
+  }
+  toggleSettings = () => { 
+    this.setState({
+      showSettings:!this.state.showSettings
+    });
+  };
+
+  setDate = (date) => {
+    this.setState({startDate: date, showSettings:false});
+    
+  }
+
+  render(){
+    return (
+      <View style={{flex:1}}>
+        <ImageBackground
+          accessibilityRole={'image'}
+          source={require('./mishnahbackground.jpg')}
+          style={styles.background}
+          imageStyle={styles.logo}>   
+                <Header showSettings={this.state.showSettings} toggleSettings={this.toggleSettings} />
+                <View style={styles.body}>
+                  <View style={styles.sectionContainer}>
+                    {this.state.showSettings &&<Settings startDate={this.state.startDate} setDate={this.setDate} /> }
+                    {!this.state.showSettings && <TodaysMishnah startDate={this.state.startDate}/>}
+                    
+                  </View>    
+                </View>
+        </ImageBackground>
+      </View>
+      
+    );
+  }
+
 };
 
 const styles = StyleSheet.create({
@@ -65,5 +92,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   }
 });
-
-export default App;

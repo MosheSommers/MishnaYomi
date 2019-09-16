@@ -14,7 +14,7 @@ export default class TodaysMishnah extends React.Component{
     
   getNumberOfDays = () => {
     const today = new Date();
-    const startingDay = new Date('August 17, 2019');
+    const startingDay = new Date(this.props.startDate);
     return Math.floor((today.getTime() - startingDay.getTime()) / (1000 * 3600 * 24));
   }
 
