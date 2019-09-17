@@ -11,8 +11,6 @@ import {
   Text, 
   View,
   StyleSheet,
-  TouchableWithoutFeedback,
-  Image
 } from 'react-native';
 
 export default class Header extends React.Component{
@@ -21,14 +19,7 @@ export default class Header extends React.Component{
     return (
       <View style={styles.header}>
         <Text style={styles.text}>Mishnah Yomi</Text>
-        <TouchableWithoutFeedback onPress={this.props.toggleSettings}>            
-          <Image
-            style={{width: 66, height: 58, alignSelf:'flex-end'}}
-            source={{uri:'https://img.icons8.com/color/48/000000/settings.png' }}
-            opacity={this.props.showSettings? 0.5 : 1}
-         /> 
-        </TouchableWithoutFeedback>  
-      </View>
+        </View>
     );
   }
 }
@@ -36,12 +27,12 @@ export default class Header extends React.Component{
 const styles = StyleSheet.create({
     header:{
       flex:1,
-      justifyContent: "space-around",
+      justifyContent: "center",
     },
     text: {
       fontSize: 40,
       fontWeight: '600',
       color: '#000',
-      alignSelf:'flex-start'
+      alignSelf:'center'
     }
   });

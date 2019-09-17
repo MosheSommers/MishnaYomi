@@ -17,6 +17,7 @@ import {
 import Header  from './app/components/Header/Header';
 import TodaysMishnah from './app/components/TodaysMishnah/TodaysMishnah';
 import Settings from './app/components/Settings/Settings';
+import Footer  from './app/components/Footer/Footer';
 
 export default class App extends React.Component {
   constructor(props){
@@ -58,13 +59,14 @@ export default class App extends React.Component {
           source={require('./mishnahbackground.jpg')}
           style={styles.background}
           imageStyle={styles.logo}>   
-                <Header showSettings={this.state.showSettings} toggleSettings={this.toggleSettings} />
+                <Header />
                 <View style={styles.body}>
                   <View style={styles.sectionContainer}>
                     {this.state.showSettings &&<Settings startDate={this.state.startDate} setDate={this.setDate} /> }
                     {!this.state.showSettings && <TodaysMishnah startDate={this.state.startDate}/>}                  
                   </View>    
                 </View>
+                <Footer showSettings={this.state.showSettings} toggleSettings={this.toggleSettings}/>
         </ImageBackground>
       </View>
       
@@ -76,6 +78,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   sectionContainer: {
     paddingTop: 96,
+    paddingBottom:96
   },
   logo: {
     opacity: 0.2,

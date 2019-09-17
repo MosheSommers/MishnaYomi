@@ -47,16 +47,29 @@ export default class TodaysMishnah extends React.Component{
 
   render(){
     return (
-      <View><Text style={styles.todaysMishnah}>{this.getTodaysMishnah()}</Text></View>
+      <View style={styles.todaysMishnah}><Text style={styles.text}>{this.getTodaysMishnah()}</Text></View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   todaysMishnah:{
-    textAlign: 'center', // <-- the magic
+    textAlign: 'center', 
     fontWeight: 'bold',
     fontSize: 25,
-    height:200
-  }
+    height:200,
+    marginLeft: 30
+  },
+
+    text: {
+      fontSize: 40,
+      color: '#000',
+      alignSelf:'center',
+      fontWeight: 'bold',
+      fontSize: 25,
+      height:200,textAlign:"center"
+    },
+
+
+ 
 });

@@ -11,10 +11,10 @@ export default class Settings extends React.Component{
 
     render(){
         return (
-            <View style={styles.todaysMishnah}>
+            <View style={styles.settings}>
                 <Text>Pick a strarting date</Text>
                 <DatePicker
-                    style={{width: 200}}
+                    style={styles.text}
                     date={this.props.startDate}
                     mode="date"
                     placeholder="select date"
@@ -40,11 +40,18 @@ export default class Settings extends React.Component{
 }
 
 const styles = StyleSheet.create({
-  todaysMishnah:{
-    textAlign: 'center', 
+  settings:{
+    textAlign: "right", 
     fontWeight: 'bold',
     fontSize: 25,
     height:200,
-    marginLeft: 30
-  }
+    alignSelf:'center'
+  },
+  text: {
+    fontSize: 40,
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize: 25,
+    width:200,
+  },
 });
