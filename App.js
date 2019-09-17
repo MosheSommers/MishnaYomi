@@ -11,11 +11,8 @@ import {
   ImageBackground,
   StyleSheet,
   View,
+  AsyncStorage
 } from 'react-native';
-
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
 
 import Header  from './app/components/Header/Header';
 import TodaysMishnah from './app/components/TodaysMishnah/TodaysMishnah';
@@ -28,8 +25,20 @@ export default class App extends React.Component {
       showSettings:false,
       startDate:"2019-08-17" //The default date for my MishnahYomi group
     };
-   
+    this.getStoredSetting(); 
   }
+
+  getStoredSetting = () => {
+    AsyncStorage.getItem('startDate').then((startDate) => {
+      if(startDate){
+        this.setState({
+          showSettings:this.state.showSettings,
+          startDate
+        });
+      }
+    });
+  };
+
   toggleSettings = () => { 
     this.setState({
       showSettings:!this.state.showSettings
@@ -38,7 +47,7 @@ export default class App extends React.Component {
 
   setDate = (date) => {
     this.setState({startDate: date, showSettings:false});
-    
+    AsyncStorage.setItem('startDate',date);
   }
 
   render(){
@@ -53,8 +62,7 @@ export default class App extends React.Component {
                 <View style={styles.body}>
                   <View style={styles.sectionContainer}>
                     {this.state.showSettings &&<Settings startDate={this.state.startDate} setDate={this.setDate} /> }
-                    {!this.state.showSettings && <TodaysMishnah startDate={this.state.startDate}/>}
-                    
+                    {!this.state.showSettings && <TodaysMishnah startDate={this.state.startDate}/>}                  
                   </View>    
                 </View>
         </ImageBackground>
@@ -66,9 +74,6 @@ export default class App extends React.Component {
 };
 
 const styles = StyleSheet.create({
-  body: {
-    backgroundColor: Colors.Clear,
-  },
   sectionContainer: {
     paddingTop: 96,
   },
