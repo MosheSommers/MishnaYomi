@@ -29,6 +29,8 @@ export default class TodaysMishnah extends React.Component{
       mishnayosCounter = mishnayosCounter + parseInt(masechtosSize[i]);
       i = i + 1;
     };
+    //If if upto is one more than masechta size that menas we're split over tow masechtos
+    const splitMasechta = mishnayosCounter + parseInt(masechtosSize[i])  === (upto + 1);
     // i now equals the index of the Masechta we're currently learning
     let perek = 1;
     while(mishnayosCounter + parseInt(mishnahData[perek][i]) <= upto){
@@ -38,10 +40,18 @@ export default class TodaysMishnah extends React.Component{
 
     //Current mishna is (the one after) mishnayos we learned minus the amount upto this perek 
     const mishna = upto - mishnayosCounter + 1;
-    const isSplit = mishnahData[perek][i]  < mishna + 1;
+    const isSplit = mishnahData[perek][i]  < mishna + 1; 
+    const mishnaFrom = `Maseches ${masechtos[i]}  Perek ${perek} Mishna ${mishna} - `;
+    const mishnaTo = `${
+      (!isSplit) ? //Not split just do next mishna
+      mishna + 1 : 
+      (!splitMasechta) ? //Same masechta next perek mishna 1 / Next masechta perek 1 mishna 1
+        `Perek ${perek + 1} Mishna 1` :
+        `Maseches ${masechtos[i + 1]} Perek 1 Mishna 1`
+      }`
     return  <>
-              <Text>Maseches {masechtos[i]} </Text>
-              <Text>Perek {perek} Mishna {mishna} - {(!isSplit) ? mishna + 1 : `Perek ${perek + 1} Mishna 1`}</Text>
+              <Text>{mishnaFrom}</Text>
+              <Text>{mishnaTo}</Text>
             </>;
   }
 
