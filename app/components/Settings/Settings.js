@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View, Text, Picker} from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
 export default class Settings extends React.Component{
@@ -12,9 +12,8 @@ export default class Settings extends React.Component{
     render(){
         return (
             <View style={styles.settings}>
-                <Text>Pick a strarting date</Text>
+                <Text style={styles.text}>Pick a starting date</Text>
                 <DatePicker
-                    style={styles.text}
                     date={this.props.startDate}
                     mode="date"
                     placeholder="select date"
@@ -34,6 +33,16 @@ export default class Settings extends React.Component{
                     }}
                     onDateChange={(date) => {this.props.setDate(date)}}
                 />
+
+                <Picker
+                  prompt='Hebrew'
+                  selectedValue={this.props.isHebrew}
+                  style={{height: 100, width: 100}}
+                  onValueChange={ (itemValue, itemIndex) => this.props.setLanguage(itemValue) }
+                  >
+                  <Picker.Item label="Hebrew" value={true} />
+                  <Picker.Item label="English" value={false} />
+                </Picker>
           </View>
         )
       }
@@ -48,10 +57,8 @@ const styles = StyleSheet.create({
     alignSelf:'center'
   },
   text: {
-    fontSize: 40,
     color: '#000',
     fontWeight: 'bold',
-    fontSize: 25,
     width:200,
   },
 });

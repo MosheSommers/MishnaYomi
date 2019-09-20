@@ -24,7 +24,8 @@ export default class App extends React.Component {
     super(props);
     this.state = { 
       showSettings:false,
-      startDate:"2019-08-17" //The default date for my MishnahYomi group
+      startDate:"2019-08-17", //The default date for my MishnahYomi group
+      isHebrew:true
     };
     this.getStoredSetting(); 
   }
@@ -38,6 +39,16 @@ export default class App extends React.Component {
         });
       }
     });
+    AsyncStorage.getItem('isHebrew').then((isHebrew) => {
+      if(isHebrew){
+        this.setState({
+          showSettings:this.state.showSettings,
+          startDate:this.state.startDate,
+          isHebrew
+        });
+      }
+    });
+
   };
 
   toggleSettings = () => { 
@@ -46,9 +57,14 @@ export default class App extends React.Component {
     });
   };
 
-  setDate = (date) => {
-    this.setState({startDate: date, showSettings:false});
+  setDate = (startDate) => {
+    this.setState({startDate, showSettings:false});
     AsyncStorage.setItem('startDate',date);
+  }
+
+  setLanguage = (isHebrew) => {
+    this.setState({isHebrew: isHebrew, showSettings:false});
+    AsyncStorage.setItem('isHebrew', isHebrew);
   }
 
   render(){
@@ -59,11 +75,20 @@ export default class App extends React.Component {
           source={require('./mishnahbackground.jpg')}
           style={styles.background}
           imageStyle={styles.logo}>   
-                <Header />
+                <Header isHebrew={this.state.isHebrew} />
                 <View style={styles.body}>
                   <View style={styles.sectionContainer}>
-                    {this.state.showSettings &&<Settings startDate={this.state.startDate} setDate={this.setDate} /> }
-                    {!this.state.showSettings && <TodaysMishnah startDate={this.state.startDate}/>}                  
+                    {!this.state.showSettings ?
+                      <TodaysMishnah 
+                        isHebrew={this.state.isHebrew}
+                        startDate={this.state.startDate}/>:
+                      <Settings 
+                        isHebrew={this.state.isHebrew}
+                        setLanguage={this.setLanguage}
+                        startDate={this.state.startDate} 
+                        setDate={this.setDate} />   
+                    }
+               
                   </View>    
                 </View>
                 <Footer showSettings={this.state.showSettings} toggleSettings={this.toggleSettings}/>

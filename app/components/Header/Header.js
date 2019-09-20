@@ -18,7 +18,7 @@ export default class Header extends React.Component{
   render(){
     return (
       <View style={styles.header}>
-        <Text style={styles.text}>Mishnah Yomi</Text>
+        <Text style={styles.text}>{this.props.isHebrew ?  `משנה יומי` : `Mishnah Yomi` }</Text>
         </View>
     );
   }

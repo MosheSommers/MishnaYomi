@@ -9,6 +9,7 @@
 import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import { mishnahData } from './mishnahData';
+import  gematriya  from 'gematriya';
 
 export default class TodaysMishnah extends React.Component{
     
@@ -23,6 +24,7 @@ export default class TodaysMishnah extends React.Component{
     const upto = days * 2;//Last mishna learned
     const masechtosSize = mishnahData[31]; //Amount of mishnayos in each Masechta
     const masechtos = mishnahData[0]; //Masechta names
+    const masechtosEnglish = mishnahData[33];
     let mishnayosCounter = 0;
     let i = 1;
     while (mishnayosCounter + parseInt(masechtosSize[i])  < upto){
@@ -41,14 +43,24 @@ export default class TodaysMishnah extends React.Component{
     //Current mishna is (the one after) mishnayos we learned minus the amount upto this perek 
     const mishna = upto - mishnayosCounter + 1;
     const isSplit = mishnahData[perek][i]  < mishna + 1; 
-    const mishnaFrom = `Maseches ${masechtos[i]}  Perek ${perek} Mishna ${mishna} - `;
-    const mishnaTo = `${
+    const mishnaFrom = (this.props.isHebrew) ?
+       `מסכת ${masechtos[i]}  פרק ${gematriya(perek, {geresh: false})} משנה ${gematriya(mishna,  {geresh: false})} - `:
+       `Maseches ${masechtosEnglish[i]}  Perek ${perek} Mishna ${mishna} - `;
+    const mishnaTo = (this.props.isHebrew) ? 
+    `${
       (!isSplit) ? //Not split just do next mishna
+      gematriya(mishna + 1,  {geresh: false}) : 
+      (!splitMasechta) ? //Same masechta next perek mishna 1 / Next masechta perek 1 mishna 1
+        `פרק ${gematriya(perek + 1, {geresh: false})} משנה ${gematriya(1,  {geresh: false})}` :
+        `מסכת ${masechtos[i + 1]} פרק ${gematriya(1,  {geresh: false})} משנה ${gematriya(1, {geresh: false})}`
+    }`:
+      `${(!isSplit) ? //Not split just do next mishna
       mishna + 1 : 
       (!splitMasechta) ? //Same masechta next perek mishna 1 / Next masechta perek 1 mishna 1
         `Perek ${perek + 1} Mishna 1` :
-        `Maseches ${masechtos[i + 1]} Perek 1 Mishna 1`
-      }`
+        `Maseches ${masechtosEnglish[i + 1]} Perek 1 Mishna 1`
+      }`;
+
     return  <>
               <Text>{mishnaFrom}</Text>
               <Text>{mishnaTo}</Text>
