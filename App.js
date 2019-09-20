@@ -11,9 +11,9 @@ import {
   ImageBackground,
   StyleSheet,
   View,
-  AsyncStorage
 } from 'react-native';
 
+import AsyncStorage from '@react-native-community/async-storage';
 import Header  from './app/components/Header/Header';
 import TodaysMishnah from './app/components/TodaysMishnah/TodaysMishnah';
 import Settings from './app/components/Settings/Settings';
