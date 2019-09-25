@@ -33,12 +33,13 @@ export default class Settings extends React.Component{
                     }}
                     onDateChange={(date) => {this.props.setDate(date)}}
                 />
-
+                <Text style={styles.text}>Pick a language</Text>
                 <Picker
                   prompt='Hebrew'
                   selectedValue={this.props.isHebrew}
-                  style={{height: 100, width: 100}}
+                  style={{ width: 150}}
                   onValueChange={ (itemValue, itemIndex) => this.props.setLanguage(itemValue) }
+                  mode={"dialog"}
                   >
                   <Picker.Item label="Hebrew" value={true} />
                   <Picker.Item label="English" value={false} />
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
     alignSelf:'center'
   },
   text: {
+    paddingTop:20,
     color: '#000',
     fontWeight: 'bold',
     width:200,
